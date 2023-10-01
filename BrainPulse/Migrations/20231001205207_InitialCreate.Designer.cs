@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrainPulse.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231001195007_InitialCreate")]
+    [Migration("20231001205207_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,7 +24,7 @@ namespace BrainPulse.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BrainPulse.Models.IncorrectOption", b =>
+            modelBuilder.Entity("BrainPulse.Models.Option", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,7 +32,7 @@ namespace BrainPulse.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("IncorrectOptionText")
+                    b.Property<string>("OptionText")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -43,7 +43,7 @@ namespace BrainPulse.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("IncorrectOptions");
+                    b.ToTable("Options");
                 });
 
             modelBuilder.Entity("BrainPulse.Models.Question", b =>
@@ -79,10 +79,10 @@ namespace BrainPulse.Migrations
                     b.ToTable("Questions");
                 });
 
-            modelBuilder.Entity("BrainPulse.Models.IncorrectOption", b =>
+            modelBuilder.Entity("BrainPulse.Models.Option", b =>
                 {
                     b.HasOne("BrainPulse.Models.Question", "Question")
-                        .WithMany("IncorrectOptions")
+                        .WithMany("Options")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -92,7 +92,7 @@ namespace BrainPulse.Migrations
 
             modelBuilder.Entity("BrainPulse.Models.Question", b =>
                 {
-                    b.Navigation("IncorrectOptions");
+                    b.Navigation("Options");
                 });
 #pragma warning restore 612, 618
         }

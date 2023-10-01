@@ -11,6 +11,6 @@ namespace BrainPulse.Data
         }
 
         public DbSet<Question> Questions { get; set; }
-        public DbSet<IncorrectOption> IncorrectOptions { get; set; }
+        public DbSet<Option> Options { get; set; }
     }
 }

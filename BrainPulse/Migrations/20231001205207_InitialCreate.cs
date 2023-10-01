@@ -28,19 +28,19 @@ namespace BrainPulse.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "IncorrectOptions",
+                name: "Options",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IncorrectOptionText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OptionText = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QuestionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_IncorrectOptions", x => x.Id);
+                    table.PrimaryKey("PK_Options", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_IncorrectOptions_Questions_QuestionId",
+                        name: "FK_Options_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
@@ -48,8 +48,8 @@ namespace BrainPulse.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_IncorrectOptions_QuestionId",
-                table: "IncorrectOptions",
+                name: "IX_Options_QuestionId",
+                table: "Options",
                 column: "QuestionId");
         }
 
@@ -57,7 +57,7 @@ namespace BrainPulse.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "IncorrectOptions");
+                name: "Options");
 
             migrationBuilder.DropTable(
                 name: "Questions");

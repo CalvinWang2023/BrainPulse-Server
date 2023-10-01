@@ -1,9 +1,9 @@
 ﻿namespace BrainPulse.Models
 {
-    public class IncorrectOption
+    public class Option
     {
         public int Id { get; set; }
-        public string IncorrectOptionText { get; set; }
+        public string OptionText { get; set; }
         public Question Question { get; set; }
     }
 }
