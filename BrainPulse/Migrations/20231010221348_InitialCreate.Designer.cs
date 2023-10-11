@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrainPulse.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231001205207_InitialCreate")]
+    [Migration("20231010221348_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

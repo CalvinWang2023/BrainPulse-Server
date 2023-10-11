@@ -11,21 +11,21 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddTransient<Seed>();
+builder.Services.AddControllers().AddJsonOptions(x =>
+                    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
-
+builder.Services.AddScoped<IOptionRepository, OptionRepository>();
 // Add CORS configuration
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", builder =>
     {
-        builder.WithOrigins("http://localhost:5173") 
+        builder.WithOrigins("https://brainpulse.netlify.app/") 
                .AllowAnyHeader()
                .AllowAnyMethod();
     });
 });
-
-builder.Services.AddControllers().AddJsonOptions(x =>
-                    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
