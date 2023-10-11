@@ -6,7 +6,7 @@ namespace BrainPulse.Interfaces
     {
         ICollection<Question> GetAllQuestions();
         Question GetQuestion(int questionId);
-        bool QuestionExist(int questionId);
+        bool QuestionExists(int questionId);
         ICollection<Question> GetSpecifiedQuestions(int amount, string category, string difficulty, string questionType);
         bool SpecifiedQuestionsExist(int amount, string category, string difficulty, string questionType);
         bool CreateQuestion(Question question);

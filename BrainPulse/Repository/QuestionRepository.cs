@@ -46,7 +46,7 @@ namespace BrainPulse.Repository
                 .OrderBy(q => random.Next()).Take(amount).ToList();
         }
 
-        public bool QuestionExist(int questionId)
+        public bool QuestionExists(int questionId)
         {
             return _context.Questions.Any(q => q.Id == questionId);
         }

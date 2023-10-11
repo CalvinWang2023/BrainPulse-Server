@@ -37,7 +37,7 @@ namespace BrainPulse.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetQuestion(int questionId)
         {
-            if (!_questionRepository.QuestionExist(questionId))
+            if (!_questionRepository.QuestionExists(questionId))
                 return NotFound();
 
             var question = _mapper.Map<QuestionDto>(_questionRepository.GetQuestion(questionId));
@@ -89,11 +89,66 @@ namespace BrainPulse.Controllers
 
             if (!_questionRepository.CreateQuestion(questionMap))
             {
-                ModelState.AddModelError("", "Something went wrong while savin");
+                ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
             }
 
             return Ok("Successfully created");
+        }
+
+
+
+        [HttpPut("{questionId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateQuestions(int questionId, [FromBody] QuestionDto updatedQuestion)
+        {
+            if (updatedQuestion == null)
+                return BadRequest(ModelState);
+
+            if (questionId != updatedQuestion.Id)
+                return BadRequest(ModelState);
+
+            if (!_questionRepository.QuestionExists(questionId))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var questionMap = _mapper.Map<Question>(updatedQuestion);
+
+            if (!_questionRepository.UpdateQuestion(questionMap))
+            {
+                ModelState.AddModelError("", "Something went wrong updating question");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{questionId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult DeleteQuestion(int questionId)
+        {
+            if (!_questionRepository.QuestionExists(questionId))
+            {
+                return NotFound();
+            }
+
+            var questionToDelete = _questionRepository.GetQuestion(questionId);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (!_questionRepository.DeleteQuestion(questionToDelete))
+            {
+                ModelState.AddModelError("", "Something went wrong deleting question");
+            }
+
+            return NoContent();
         }
     }
 }
