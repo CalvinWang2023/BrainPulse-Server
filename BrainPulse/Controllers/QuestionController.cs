@@ -24,7 +24,7 @@ namespace BrainPulse.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<Question>))]
         public IActionResult GetAllQuestions()
         {
-            var questions = _questionRepository.GetAllQuestions();
+            var questions = _mapper.Map<List<QuestionDto>>(_questionRepository.GetAllQuestions());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -67,7 +67,7 @@ namespace BrainPulse.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateQuestions([FromBody] QuestionDto questionCreate)
+        public IActionResult CreateQuestion([FromBody] QuestionDto questionCreate)
         {
             if (questionCreate == null)
                 return BadRequest(ModelState);
@@ -96,13 +96,11 @@ namespace BrainPulse.Controllers
             return Ok("Successfully created");
         }
 
-
-
         [HttpPut("{questionId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateQuestions(int questionId, [FromBody] QuestionDto updatedQuestion)
+        public IActionResult UpdateQuestion(int questionId, [FromBody] QuestionDto updatedQuestion)
         {
             if (updatedQuestion == null)
                 return BadRequest(ModelState);
